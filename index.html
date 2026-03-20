@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You 🌸</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(to top, #ffd6e0, #fff0f5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Comic Sans MS", cursive;
+  overflow: hidden;
+}
+
+/* 🌸 Petals */
+.petal {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: pink;
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-10vh); }
+  100% { transform: translateY(110vh); }
+}
+
+/* 💖 Card */
+.card {
+  background: rgba(255,255,255,0.9);
+  padding: 40px;
+  border-radius: 25px;
+  text-align: center;
+  width: 320px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+/* Buttons */
+.btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.yes {
+  background: #ff6f91;
+  color: white;
+}
+
+.no {
+  background: #ddd;
+  position: fixed;
+  z-index: 1000;
+}
+
+/* Message */
+.message {
+  margin-top: 15px;
+  color: #ff6f91;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h2>Mithai, will you be my girlfriend? 💖</h2>
+
+  <button class="btn yes" onclick="sayYes()">Yes 💕</button>
+  <button class="btn no" id="noBtn">No 🙈</button>
+
+  <div class="message">You know the answer already ✨</div>
+</div>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+
+/* 💀 Move NO button */
+noBtn.addEventListener("mouseover", moveButton);
+
+function moveButton() {
+  const maxX = window.innerWidth - noBtn.offsetWidth;
+  const maxY = window.innerHeight - noBtn.offsetHeight;
+
+  noBtn.style.left = Math.random() * maxX + "px";
+  noBtn.style.top = Math.random() * maxY + "px";
+}
+
+/* 💖 YES CLICK */
+function sayYes() {
+  document.body.innerHTML = `
+  
+  <div style="
+    height:100vh;
+    background:#f8d7da;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    font-family:Arial;
+  ">
+
+    <div style="
+      background:#fff;
+      padding:30px;
+      border-radius:20px;
+      text-align:center;
+      width:300px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.1);
+    ">
+    
+      <h1 style="color:#ff4d6d;">Yayy! You said YES! 💖</h1>
+      <p style="color:#666;">Knew you'd say yes</p>
+
+      <div id="heartsContainer" style="
+        height:200px;
+        position:relative;
+        overflow:hidden;
+      "></div>
+
+      <button onclick="playMusic()" style="
+        margin-top:15px;
+        padding:8px;
+        border:none;
+        border-radius:10px;
+        background:#ff6f91;
+        color:white;
+      ">
+        🎵 Tap for music
+      </button>
+
+    </div>
+
+    <audio id="bgMusic" loop>
+      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+  </div>
+  `;
+
+  createHearts();
+}
+
+/* 🎵 Play music */
+function playMusic() {
+  const music = document.getElementById("bgMusic");
+  music.play();
+}
+
+/* 💗 Floating hearts */
+function createHearts() {
+  const container = document.getElementById("heartsContainer");
+
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.innerText = "💗";
+
+    heart.style.position = "absolute";
+    heart.style.left = Math.random() * 100 + "%";
+    heart.style.bottom = "0";
+    heart.style.fontSize = "20px";
+    heart.style.transition = "3s";
+
+    container.appendChild(heart);
+
+    setTimeout(() => {
+      heart.style.transform = "translateY(-200px)";
+      heart.style.opacity = "0";
+    }, 50);
+
+    setTimeout(() => heart.remove(), 3000);
+
+  }, 300);
+}
+
+/* 🌸 Petals */
+for (let i = 0; i < 30; i++) {
+  const petal = document.createElement("div");
+  petal.className = "petal";
+  petal.style.left = Math.random() * 100 + "vw";
+  petal.style.animationDuration = (3 + Math.random() * 5) + "s";
+  document.body.appendChild(petal);
+}
+</script>
+
+</body>
+</html>
